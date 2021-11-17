@@ -24,10 +24,17 @@ class Application
         $request = trim($_SERVER["REQUEST_URI"], "/");
         if(isset($request)){
             $url = explode('/' , $request);
-            $this->controller = isset($url[0]) ? $url[0].'Controller' : 'taskController';
-            $this->action = isset($url[1]) ? $url[1] : 'index';
-            unset($url[0],$url[1]);
-            $this->prams =!empty($url) ? array_values($url) : [];
+            if($url[0] == "api"){
+                $this->controller = isset($url[1]) ? $url[1].'Controller' : 'taskController';
+                $this->action = isset($url[2]) ? $url[2] : 'index';
+                unset($url[0],$url[1]);
+                $this->prams =!empty($url) ? array_values($url) : [];
+            }else {
+                $this->controller = isset($url[0]) ? $url[0].'Controller' : 'taskController';
+                $this->action = isset($url[1]) ? $url[1] : 'index';
+                unset($url);
+                $this->prams =!empty($url) ? array_values($url) : [];
+            }
         }
     }
 }
