@@ -1,5 +1,5 @@
 <?php
-class taskController extends Controller
+class TaskController extends Controller
 {
     public $taskModel;
 
@@ -14,21 +14,46 @@ class taskController extends Controller
         $this->view->render();
     }
 
-    public function get_task()
+    public function data()
     {
-        echo "json";
+        $data = $this->taskModel->getDataTask();
+        echo json_encode($data);
     }
 
     public function add()
-    {
+    {   
         $atribute = [
-            'word_name' => $_POST['word_name'],
+            'work_name' => $_POST['work_name'],
             'start_date' => $_POST['start_date'],
             'end_date' => $_POST['end_date'],
             'status' => $_POST['status']
         ];
 
         $data = $this->taskModel->createTask($atribute);
+        return $data;
+    }
+
+    public function edit($id)
+    {   
+        $atribute = [
+            'id' => $id
+        ];
+
+        $data = $this->taskModel->editTask($atribute);
+        echo json_encode($data);
+    }
+
+    public function update($id)
+    {   
+        $atribute = [
+            'work_name' => $_POST['work_name'],
+            'start_date' => $_POST['start_date'],
+            'end_date' => $_POST['end_date'],
+            'status' => $_POST['status'],
+            'id' => $_POST['id']
+        ];
+
+        $data = $this->taskModel->updateTask($atribute, $id);
         return $data;
     }
 }

@@ -8,21 +8,26 @@
     box-sizing: border-box;
 }
 
+/* body {
+	font-family: Arial, Helvetica, sans-serif;
+} */
+
+table {
+	font-size: 1em;
+}
+
+.ui-draggable, .ui-droppable {
+	background-position: top;
+}
+
 body {
-    font-family: Arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
     background-color: #0079bf;
 }
 
-.container {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 80%;
-}
-
-.btn {
+.btn-cus-cus {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,13 +54,13 @@ body {
     box-shadow: 0 0.1rem 0.1rem rgba(0, 0, 0, 0.1);
 }
 
-.masthead .btn {
+.masthead .btn-cus {
     background-color: #4c94be;
     border-radius: 0.3rem;
     transition: background-color 150ms;
 }
 
-.masthead .btn:hover {
+.masthead .btn-cus:hover {
     background-color: #3385b5;
 }
 
@@ -134,7 +139,7 @@ body {
     color: #f6f6f6;
 }
 
-.board-info-bar .btn {
+.board-info-bar .btn-cus {
     font-size: 1.4rem;
     font-weight: 400;
     transition: background-color 150ms;
@@ -143,7 +148,7 @@ body {
     height: 3rem;
 }
 
-.board-info-bar .btn:hover {
+.board-info-bar .btn-cus:hover {
     background-color: #006aa8;
 }
 
@@ -327,7 +332,7 @@ body {
     .list-items li,
     .boards-btn,
     .board-info-bar,
-    .board-controls .btn,
+    .board-controls .btn-cus,
     .user-settings-btn {
         margin: 0;
     }

@@ -2,7 +2,7 @@
 
 class Application
 {
-    protected $controller = 'taskController';
+    protected $controller = 'TaskController';
     protected $action = 'index';
     protected $prams = [];
 
@@ -15,7 +15,7 @@ class Application
                 call_user_func_array([$this->controller,$this->action], $this->prams);
             }
         }else{
-            $this->controller = new taskController();
+            $this->controller = new TaskController();
             $this->controller->index();
         }
     }
@@ -25,14 +25,14 @@ class Application
         if(isset($request)){
             $url = explode('/' , $request);
             if($url[0] == "api"){
-                $this->controller = isset($url[1]) ? $url[1].'Controller' : 'taskController';
+                $this->controller = isset($url[1]) ? $url[1].'Controller' : 'TaskController';
                 $this->action = isset($url[2]) ? $url[2] : 'index';
-                unset($url[0],$url[1]);
+                unset($url[0],$url[1],$url[2]);
                 $this->prams =!empty($url) ? array_values($url) : [];
             }else {
-                $this->controller = isset($url[0]) ? $url[0].'Controller' : 'taskController';
+                $this->controller = isset($url[0]) ? $url[0].'Controller' : 'TaskController';
                 $this->action = isset($url[1]) ? $url[1] : 'index';
-                unset($url);
+                unset($url[0],$url[1]);
                 $this->prams =!empty($url) ? array_values($url) : [];
             }
         }
