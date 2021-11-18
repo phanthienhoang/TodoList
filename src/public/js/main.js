@@ -91,10 +91,10 @@ function loadData(container, data)
         container.append(
             `<li class="draggable-item" id="draggable-${task.id}" status="${task.status}" >
                 <div class="row">
-                    <div class="col-sm-8" onclick=modalShow(${task.id})>
+                    <div class="col-sm-9" onclick=modalShow(${task.id})>
                         <p>${task.work_name}</p>
-                        <p>${task.start_date.substring(0,16)}</p>
-                        <p id="date-${task.id}">${task.end_date.substring(0,16)}</p>
+                        <p><i class="fa fa-clock-o" aria-hidden="true"></i> ${task.start_date.substring(0,16)}</p>
+                        <p id="date-${task.id}"><i class="fa fa-clock-o" aria-hidden="true"></i> ${task.end_date.substring(0,16)}</p>
                     </div>
                     <div class="col-sm-2" onclick="delTask(${task.id})">
                         <p><button><i class="fa fa-trash" aria-hidden="true"></i></button></p>
