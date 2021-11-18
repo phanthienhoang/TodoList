@@ -49,12 +49,12 @@ class TaskController extends Controller
         ];
 
         //check data input
-        $valid =$this->validateForm($atribute);
-        if(empty($valid)){
+        $err_msg =$this->validateForm($atribute);
+        if(empty($err_msg)){
             $this->taskModel->createTask($atribute);
-          
+            echo json_encode(array("statusCode"=>200));
         }else{
-            echo json_encode(array("error"=>$valid));
+            echo json_encode(array("error"=>$err_msg));
         }
     }
 
@@ -85,12 +85,13 @@ class TaskController extends Controller
         ];
 
         //check data input
-        $valid =$this->validateForm($atribute);
+        $err_msg =$this->validateForm($atribute);
 
-        if(empty($valid)){
+        if(empty($err_msg)){
             $this->taskModel->updateTask($atribute);
+            echo json_encode(array("statusCode"=>200));
         }else{
-            echo json_encode(array("error"=>$valid));
+            echo json_encode(array("error"=>$err_msg));
         }
     }
 
@@ -105,7 +106,7 @@ class TaskController extends Controller
         ];
 
         $this->taskModel->droppableTask($atribute);
-        echo json_encode( array("statusCode"=>200));
+        echo json_encode(array("statusCode"=>200));
     }
 
     /*
@@ -129,7 +130,7 @@ class TaskController extends Controller
     {
         // trim data input
         $atribute = array_filter(array_map('trim', $atribute));
-        $error = array();
+        $error = null;
         if(empty($atribute['work_name'])){
             $error['work_name'] = "work_name is require";
         }

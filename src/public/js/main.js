@@ -167,14 +167,16 @@ function addAndUpdateTask(id)
             type: "post",
             url: "api/task/add",
             success: function(dataResult){
-                if(dataResult.error !=""){
+                var dataResult = JSON.parse(dataResult);
+                if(dataResult.statusCode == "200"){
                     $('#exampleModal').modal('hide');
                     resetFormModal();
                     $.notify("Data added successfully !", "success");
                     getDataTask();
                 }
                 else {
-                    displayMesErr(dataResult.statusCode)
+                    console.log("Aaa   ")
+                    displayMesErr(dataResult.error)
                 }
             }
         });
@@ -184,14 +186,15 @@ function addAndUpdateTask(id)
             type: "post",
             url: "api/task/update" ,
             success: function(dataResult){
-                if(dataResult.error !=""){
+                var dataResult = JSON.parse(dataResult);
+                if(dataResult.statusCode == "200"){
                     $('#exampleModal').modal('hide');
                     resetFormModal();
                     $.notify("Data edit successfully !", "success");
                     getDataTask();
                 }
                 else {
-                    displayMesErr(dataResult.statusCode)
+                    displayMesErr(dataResult.error)
                 }
             }
         });
@@ -239,6 +242,8 @@ function displayMesErr(mesErr){
     $("#err_start_date").html("");
     $("#err_end_date").html("");
     $("#err_status").html("");
+
+    console.log(mesErr)
     $("#err_work_name").html(mesErr.work_name);
     $("#err_start_date").html(mesErr.start_date);
     $("#err_end_date").html(mesErr.end_date);
@@ -262,7 +267,6 @@ function resetFormModal(){
 check dead line
 */
 function checkDeadline(id, status, end_date){
-
     var color = "";
     if(status != "complete"){
         var today = new Date();
