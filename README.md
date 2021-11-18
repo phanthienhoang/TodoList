@@ -1,7 +1,7 @@
 RUN PROJECT
 
 
-1.clone source
+1.clone source code
 
 2.mở cmd/terminal và cd vào thư mục public của source
 
@@ -36,5 +36,8 @@ SET UP PROJECT PHP THEO MÔ HÌNH MVC
 2. Database
 
     DB test
-	
+
+3. Unit test matrix
+    
+    File unit test
 
