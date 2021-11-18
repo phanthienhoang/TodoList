@@ -1,6 +1,9 @@
 $(document).ready(function()
 {
-    getDataTask()
+    // call data
+    getDataTask();
+
+    // format data time
     $('#datetimepicker1').datetimepicker({
         format: 'YYYY-MM-DD HH:mm',
     });
@@ -13,6 +16,7 @@ $(document).ready(function()
     $('#datetimepicker4').datetimepicker({
         format: 'YYYY-MM-DD HH:mm',
     });
+
     init();
 });
 
@@ -23,6 +27,9 @@ function init() {
     }).disableSelection();
 }
 
+/*
+function get data
+*/
 function getDataTask()
 {
     $.ajax({
@@ -46,18 +53,17 @@ function getDataTask()
             loadData($("#planning"), arrPlanning);
             loadData($("#doing"), arrDoing);
             loadData($("#complete"), arrComplete);
-
             droppableTask();
-
-
         }
     });
 }
 
+/*
+function droppable
+*/
 function droppableTask(){
     $( ".list-items" ).droppable({
         drop: function( event, ui ) {
-            console.log(ui.draggable.attr("id"))
             var taskId = ui.draggable.attr("id");
             var newStatus =$(this).attr("id");
             $.ajax({
@@ -70,26 +76,36 @@ function droppableTask(){
                 success: function(dataResult){
                 }
             });
+            
         }
-      });
+    });
 }
 
+/*
+append data
+*/
 function loadData(container, data)
 {
     for(let i = 0; i < data.length; i++){
-        const task = data[i]
-        container.append(`<li class="draggable-item" id="draggable-${task.id}">
-                            <div class="row">
-                                <div class="col-sm-8" onclick=modalHide(${task.id})>
-                                    <p >${task.work_name}</p>
-                                </div>
-                                <div class="col-sm-2" onclick="delTask(${task.id})">
-                                    <p><button><i class="fa fa-trash" aria-hidden="true"></i></button></p>
-                                </div>
-                            </div>
-                        </li>`)
+        const task = data[i];
+        container.append(
+            `<li class="draggable-item" id="draggable-${task.id}" status="${task.status}">
+                <div class="row">
+                    <div class="col-sm-8" onclick=modalShow(${task.id})>
+                        <p >${task.work_name}</p>
+                        <p>${task.end_date.substring(0,11)}</p>
+                    </div>
+                    <div class="col-sm-2" onclick="delTask(${task.id})">
+                        <p><button><i class="fa fa-trash" aria-hidden="true"></i></button></p>
+                    </div>
+                </div>
+            </li>`);
     }
 }
+
+/*
+delete task by id
+*/
 function delTask(id){
     var confirm = window.confirm("Do you really want to delete it?")
     if(confirm){
@@ -104,7 +120,11 @@ function delTask(id){
     }
 
 }
-function modalHide(id){
+
+/*
+modal show
+*/
+function modalShow(id){
     resetFormModal();
     $('#exampleModal').modal('show');
     if(id != ""){
@@ -122,12 +142,19 @@ function modalHide(id){
         });
     }
 }
+
+/*
+add status for collum
+*/
 function addStatus(val)
 {
     resetFormModal();
     $("#status").val(val).change();
 }
 
+/*
+add or update task by id
+*/
 function addAndUpdateTask(id)
 {
     var data = $("#task_form").serialize();
@@ -137,8 +164,7 @@ function addAndUpdateTask(id)
             type: "post",
             url: "api/task/add",
             success: function(dataResult){
-                var dataResult = JSON.parse(dataResult);
-                if(dataResult.statusCode==200){
+                if(dataResult.error !=""){
                     $('#exampleModal').modal('hide');
                     resetFormModal();
                     $.notify("Data added successfully !", "success");
@@ -155,8 +181,7 @@ function addAndUpdateTask(id)
             type: "post",
             url: "api/task/update" ,
             success: function(dataResult){
-                var dataResult = JSON.parse(dataResult);
-                if(dataResult.statusCode==200){
+                if(dataResult.error !=""){
                     $('#exampleModal').modal('hide');
                     resetFormModal();
                     $.notify("Data edit successfully !", "success");
@@ -170,6 +195,9 @@ function addAndUpdateTask(id)
     }
 }
 
+/*
+filter Task
+*/
 function filterTaskByData(event)
 {
     event.preventDefault();
@@ -199,6 +227,10 @@ function filterTaskByData(event)
         }
     });
 }
+
+/*
+display error message
+*/
 function displayMesErr(mesErr){
     $("#err_work_name").html("");
     $("#err_start_date").html("");
@@ -210,6 +242,9 @@ function displayMesErr(mesErr){
     $("#err_status").html(mesErr.status);
 }
 
+/*
+reset form
+*/
 function resetFormModal(){
     $("#work_name").val("");
     $("#start_date").val("");
@@ -218,4 +253,12 @@ function resetFormModal(){
     $("#err_start_date").html("");
     $("#err_end_date").html("");
     $("#err_status").html("");
+}
+
+/*
+add color date
+*/
+
+function checkColorbyDate(){
+
 }

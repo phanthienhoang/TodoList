@@ -14,6 +14,9 @@ class DB{
         $this->con = $this->connection();
     }
 
+    /*
+     Function connect db with PDO
+    */
     public function connection()
     { 
         try {

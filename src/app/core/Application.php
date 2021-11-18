@@ -12,6 +12,7 @@ class Application
         if(file_exists(CONTROLLER. $this->controller.'.php')){
             $this->controller = new $this->controller;
             if(method_exists($this->controller,$this->action)){
+                //call function by name
                 call_user_func_array([$this->controller,$this->action], $this->prams);
             }
         }else{
@@ -20,10 +21,15 @@ class Application
         }
     }
 
+    /*
+     Check params URL
+    */
     protected function prepareURL(){
         $request = trim($_SERVER["REQUEST_URI"], "/");
         if(isset($request)){
             $url = explode('/' , $request);
+            
+            //setting api url
             if($url[0] == "api"){
                 $this->controller = isset($url[1]) ? $url[1].'Controller' : 'TaskController';
                 $this->action = isset($url[2]) ? $url[2] : 'index';

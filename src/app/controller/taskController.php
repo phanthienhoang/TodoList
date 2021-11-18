@@ -8,12 +8,18 @@ class TaskController extends Controller
         $this->taskModel = $this->model('Task');
     }
 
+    /*
+     Page index
+    */
     public function index()
     {
         $this->view('task\index', []);
         $this->view->render();
     }
 
+    /*
+     Function get data task
+    */
     public function data()
     {
         if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -30,6 +36,9 @@ class TaskController extends Controller
         echo json_encode($data);
     }
 
+    /*
+     Function add task
+    */
     public function add()
     {
         $atribute = [
@@ -40,15 +49,18 @@ class TaskController extends Controller
         ];
 
         //check data input
-        $valid =$this->validate($atribute);
+        $valid =$this->validateForm($atribute);
         if(empty($valid)){
             $this->taskModel->createTask($atribute);
-            echo json_encode( array("statusCode"=>200));
+          
         }else{
-            echo json_encode(array("statusCode"=>$valid));
+            echo json_encode(array("error"=>$valid));
         }
     }
 
+    /*
+     Function show detail task
+    */
     public function edit($id)
     {
         $atribute = [
@@ -59,6 +71,9 @@ class TaskController extends Controller
         echo json_encode($data);
     }
 
+    /*
+     Function update task
+    */
     public function update()
     {
         $atribute = [
@@ -70,15 +85,18 @@ class TaskController extends Controller
         ];
 
         //check data input
-        $valid =$this->validate($atribute);
+        $valid =$this->validateForm($atribute);
+
         if(empty($valid)){
             $this->taskModel->updateTask($atribute);
-            echo json_encode( array("statusCode"=>200));
         }else{
-            echo json_encode(array("statusCode"=>$valid));
+            echo json_encode(array("error"=>$valid));
         }
     }
 
+    /*
+     Function update status by droppable
+    */
     public function droppable()
     {
         $atribute = [
@@ -90,6 +108,9 @@ class TaskController extends Controller
         echo json_encode( array("statusCode"=>200));
     }
 
+    /*
+     Function delete Task
+    */
     public function delete($id)
     {
         $atribute = [
@@ -101,9 +122,14 @@ class TaskController extends Controller
         echo json_encode($data);
     }
 
-    public function validate($atribute)
+    /*
+     Validate data input
+    */
+    public function validateForm($atribute)
     {
+        // trim data input
         $atribute = array_filter(array_map('trim', $atribute));
+        $error = array();
         if(empty($atribute['work_name'])){
             $error['work_name'] = "work_name is require";
         }
