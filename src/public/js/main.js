@@ -103,7 +103,6 @@ function loadData(container, data)
             </li>`);
 
         checkDeadline(task.id,task.status, task.end_date)
-
     }
 }
 
@@ -209,30 +208,37 @@ function filterTaskByData(event)
 {
     event.preventDefault();
     var data = $("#form_search").serialize();
-    $.ajax({
-        data: data,
-        type: "post",
-        url: "api/task/data",
-        success: function(dataResult){
-            var dataResult = JSON.parse(dataResult);
-            var arrPlanning = dataResult.filter(function(item){
-                return item.status == "planning";
-            });
-            var arrDoing = dataResult.filter(function(item){
-                return item.status == "doing";
-            });
-            var arrComplete = dataResult.filter(function(item){
-                return item.status == "complete";
-            });
+    console.log(data.length)
 
-            $("#planning").html("");
-            $("#doing").html("");
-            $("#complete").html("");
-            loadData($("#planning"), arrPlanning);
-            loadData($("#doing"), arrDoing);
-            loadData($("#complete"), arrComplete);
-        }
-    });
+    if(data.length <= 35){
+        $.notify("Data empty !", "info");
+    }else{
+        $.ajax({
+            data: data,
+            type: "post",
+            url: "api/task/data",
+            success: function(dataResult){
+                var dataResult = JSON.parse(dataResult);
+                $.notify("Found " + dataResult.length + " records", "success");
+                var arrPlanning = dataResult.filter(function(item){
+                    return item.status == "planning";
+                });
+                var arrDoing = dataResult.filter(function(item){
+                    return item.status == "doing";
+                });
+                var arrComplete = dataResult.filter(function(item){
+                    return item.status == "complete";
+                });
+    
+                $("#planning").html("");
+                $("#doing").html("");
+                $("#complete").html("");
+                loadData($("#planning"), arrPlanning);
+                loadData($("#doing"), arrDoing);
+                loadData($("#complete"), arrComplete);
+            }
+        });
+    }
 }
 
 /*

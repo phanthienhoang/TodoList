@@ -31,6 +31,9 @@
         <table class="table">
             <tbody>
                 <tr>
+                    <td>
+                            <div class='input-group'><button onclick="getDataTask()" class="form-control">get all data</button></div>
+                    </td>
                     <form id="form_search">
                         <td>
                             <div class='input-group date' id='datetimepicker3'>
