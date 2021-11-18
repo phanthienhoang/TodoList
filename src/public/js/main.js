@@ -93,7 +93,8 @@ function loadData(container, data)
                 <div class="row">
                     <div class="col-sm-8" onclick=modalShow(${task.id})>
                         <p>${task.work_name}</p>
-                        <p id="date-${task.id}">${task.end_date.substring(0,11)}</p>
+                        <p>${task.start_date.substring(0,16)}</p>
+                        <p id="date-${task.id}">${task.end_date.substring(0,16)}</p>
                     </div>
                     <div class="col-sm-2" onclick="delTask(${task.id})">
                         <p><button><i class="fa fa-trash" aria-hidden="true"></i></button></p>
@@ -271,7 +272,7 @@ function checkDeadline(id, status, end_date){
     if(status != "complete"){
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var mm = String(today.getMonth() + 1).padStart(2, '0');
         var yyyy = today.getFullYear();
         var hh = String(today.getHours()).padStart(2, '0');
         var min = String(today.getMinutes()).padStart(2, '0');
