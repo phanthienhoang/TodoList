@@ -89,17 +89,20 @@ function loadData(container, data)
     for(let i = 0; i < data.length; i++){
         const task = data[i];
         container.append(
-            `<li class="draggable-item" id="draggable-${task.id}" status="${task.status}">
+            `<li class="draggable-item" id="draggable-${task.id}" status="${task.status}" >
                 <div class="row">
                     <div class="col-sm-8" onclick=modalShow(${task.id})>
-                        <p >${task.work_name}</p>
-                        <p>${task.end_date.substring(0,11)}</p>
+                        <p>${task.work_name}</p>
+                        <p id="date-${task.id}">${task.end_date.substring(0,11)}</p>
                     </div>
                     <div class="col-sm-2" onclick="delTask(${task.id})">
                         <p><button><i class="fa fa-trash" aria-hidden="true"></i></button></p>
                     </div>
                 </div>
             </li>`);
+
+        checkDeadline(task.id,task.status, task.end_date)
+
     }
 }
 
@@ -256,9 +259,24 @@ function resetFormModal(){
 }
 
 /*
-add color date
+check dead line
 */
+function checkDeadline(id, status, end_date){
 
-function checkColorbyDate(){
-
+    var color = "";
+    if(status != "complete"){
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        var hh = String(today.getHours()).padStart(2, '0');
+        var min = String(today.getMinutes()).padStart(2, '0');
+        today = yyyy +'-' + mm + '-' + dd + ' ' + hh + ':' + min;
+        if(today > end_date) {
+            color = "red";
+        }
+    }else{
+        color = "green";
+    }
+    $("#date-"+id).css("color" , color);
 }

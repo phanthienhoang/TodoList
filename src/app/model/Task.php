@@ -7,11 +7,11 @@ class Task extends DB
     */
     public function getDataTask($atribute){
         if(empty($atribute)){
-            $sql = "SELECT `id`, `work_name`, `start_date`, `end_date`, `status` FROM `tasks`WHERE DELETE_FLG=0";
+            $sql = "SELECT `id`, `work_name`, `start_date`, `end_date`, `status` FROM `tasks`WHERE DELETE_FLG=0 ORDER BY end_date ASC";
             $statement = $this->con->prepare($sql);
             $statement->execute();
         }else{
-            $sql = "SELECT `id`, `work_name`, `start_date`, `end_date`, `status`, `DELETE_FLG` FROM `tasks`WHERE start_date>=:start_date AND end_date<=:end_date AND DELETE_FLG=0";
+            $sql = "SELECT `id`, `work_name`, `start_date`, `end_date`, `status`, `DELETE_FLG` FROM `tasks`WHERE start_date>=:start_date AND end_date<=:end_date AND DELETE_FLG=0 ORDER BY end_date ASC";
             $statement = $this->con->prepare($sql);
             $statement->execute($atribute);
         }
