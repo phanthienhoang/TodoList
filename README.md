@@ -6,9 +6,11 @@ RUN PROJECT
 2.mở cmd/terminal và cd vào thư mục public của source
 
 3.run câu lệnh khởi tạo server
+
 	php -S 127.0.0.1:8001 
 
 4.Truy cập 
+
 	http://127.0.0.1:8001/
 	
 
